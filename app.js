@@ -1,12 +1,12 @@
-
 const express = require('express');
 const app = express();
-const todoRoutes = require('./Routes/todo.js');
+const todoRoutes = require('./Routes/todo.js'); 
+
 const port = 3000;
 
 app.use(express.json());
 
-
+// Menambahkan route ke `/api` yang mencakup `todos` dan `books`
 app.use('/api', todoRoutes); 
 
 app.set('view engine', 'ejs');
