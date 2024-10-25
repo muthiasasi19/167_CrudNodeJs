@@ -1,15 +1,22 @@
-// Routes/todo.js
+
 const express = require('express');
 const router = express.Router();
 
-// Data todos (data sebelumnya)
+// todos
 let todos = [
-    { id: 1, task: "Belajar Node.Js", completed: false },
-    { id: 2, task: "Membuat API", completed: false },
-    { id: 3, task: "New Task", completed: false },
+    { id: 1, 
+        task: "Belajar Node.Js", 
+        completed: false },
+    { id: 2,
+         task: "Membuat API", 
+         completed: false },
+    { id: 3, 
+        task: "New Task", 
+        completed: false },
 ];
 
-// Data books (data baru)
+
+// books (baru)
 let books = [
     { id: 1, title: "The Great Gatsby", author: "F. Scott Fitzgerald", year: 1925, genre: "Fiction" },
     { id: 2, title: "1984", author: "George Orwell", year: 1949, genre: "Dystopian" },
