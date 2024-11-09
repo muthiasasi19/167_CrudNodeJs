@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../database/tododb'); // Pastikan mengimpor koneksi ke database
-
-
+const db = require('../database/tododb'); 
 let todos = [
     {
-        id: 1, task: "Belajar Node.Js", completed: false
+        id: 1, task: "Belajar Node.Js",
+         completed: false
     },
     {
-    id: 2, task: "Membuat API", completed: false
+    id: 2, task: "Membuat API",
+     completed: false
     },
 ];
 
