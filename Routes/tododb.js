@@ -34,7 +34,7 @@ router.post('/', (req, res) => {
             return res.status(500).send('Internal Server Error');
         }
 
-        // Menambahkan pesan konfirmasi ke terminal
+        //  pesan konfirmasi ke terminal
         console.log('Data berhasil masuk ke database:', { id: results.insertId, task: task.trim(), completed: completedValue });
 
         const newTodo = { id: results.insertId, task: task.trim(), completed: completedValue };
@@ -50,7 +50,7 @@ router.put('/:id', (req, res) => {
         if (err) return res.status(500).send('Internal Server Error');
         if (results.affectedRows === 0) return res.status(404).send('Tugas tidak ditemukan');
 
-        // Menambahkan pesan konfirmasi ke terminal
+        //  pesan konfirmasi ke terminal
         console.log(`Data dengan ID ${req.params.id} berhasil diperbarui di database`);
 
         res.json({ id: req.params.id, task, completed });
@@ -63,7 +63,7 @@ router.delete('/:id', (req, res) => {
         if (err) return res.status(500).send('Internal Server Error');
         if (results.affectedRows === 0) return res.status(404).send('Tugas tidak ditemukan');
 
-        // Menambahkan pesan konfirmasi ke terminal
+        // pesan konfirmasi ke terminal
         console.log(`Data dengan ID ${req.params.id} berhasil dihapus dari database`);
 
         res.status(204).send();
