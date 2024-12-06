@@ -1,71 +1,61 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../database/tododb'); 
-let todos = [
-    {
-        id: 1, task: "Belajar Node.Js",
-         completed: false
-    },
-    {
-    id: 2, task: "Membuat API",
-     completed: false
-    },
-];
+const db = require('../database/tododb');
 
-//Endpoint untuk mendapatkan data todos
+
+// Endpoint untuk mendapatkan data todos
 router.get('/', (req, res) => {
-    res.json(todos);
+    db.query('SELECT * FROM todos', (err, results) => {
+        if (err) return res.status(500).send('Internal Server Error');
+        res.json(results);
+    });
+  });
+
+document.getElementById('addTodoBtn').addEventListener('click', function() {
+    window.location.href = '/add'; // Mengarahkan ke halaman add.ejs
 });
 
+
+// Endpoint untuk menambahkan tugas baru
 router.post('/', (req, res) => {
-    const newTodo = {
-        id: todos.length + 1,
-        task: req.body.task,
-        completed: false
-    };
-    todos.push(newTodo);
-    res.status(201).json(newTodo);
+    const { nama_buku, genre, tahun_terbit } = req.body;
+
+    if (!nama_buku || !genre || !tahun_terbit) {
+        return res.status(400).send('Semua field harus diisi');
+    }
+
+    db.query('INSERT INTO todos (nama_buku, genre, tahun_terbit) VALUES (?, ?, ?)', [nama_buku, genre, tahun_terbit], (err, results) => {
+        if (err) {
+            console.error('Database Insert Error:', err);
+            return res.status(500).send('Internal Server Error');
+        }
+
+        res.status(201).json({ id: results.insertId, nama_buku, genre, tahun_terbit });
+
+    });
 });
 
 // PUT: Update a todo by ID
 router.put('/:id', (req, res) => {
-    const todoId = parseInt(req.params.id);
-    const { task, completed } = req.body;
+    const { nama_buku, genre, tahun_terbit } = req.body;
 
-    // Find the todo by id
-    const todoIndex = todos.findIndex(todo => todo.id === todoId);
+    db.query('UPDATE todos SET nama_buku = ?, genre = ?, tahun_terbit = ? WHERE id = ?', [nama_buku, genre, tahun_terbit, req.params.id], (err, results) => {
+        if (err) return res.status(500).send('Internal Server Error');
+        if (results.affectedRows === 0) return res.status(404).send('Tugas tidak ditemukan');
 
-    if (todoIndex !== -1) {
-        // Update the todo with new data
-        todos[todoIndex] = {
-            ...todos[todoIndex],
-            task: task !== undefined ? task : todos[todoIndex].task,
-            completed: completed !== undefined ? completed : todos[todoIndex].completed
-        };
-        res.json(todos[todoIndex]);
-    } else {
-        res.status(404).json({ message: 'Todo not found' });
-    }
+        const updatedTodo = { id: req.params.id, nama_buku, genre, tahun_terbit };
+        res.json(updatedTodo);
+    });
 });
 
 // DELETE: Remove a todo by ID
 router.delete('/:id', (req, res) => {
-    const todoId = parseInt(req.params.id);
+    db.query('DELETE FROM todos WHERE id = ?', [req.params.id], (err, results) => {
+        if (err) return res.status(500).send('Internal Server Error');
+        if (results.affectedRows === 0) return res.status(404).send('Tugas tidak ditemukan');
 
-    // Find the todo by id
-    const todoIndex = todos.findIndex(todo => todo.id === todoId);
-
-    if (todoIndex !== -1) {
-        // Remove the todo from the array
-        const deletedTodo = todos.splice(todoIndex, 1);
-        res.json(deletedTodo[0]);
-    } else {
-        res.status(404).json({ message: 'Todo not found' });
-    }
-}); 
-
-
-
-
+        res.status(204).send();
+    });
+});
 
 module.exports = router;

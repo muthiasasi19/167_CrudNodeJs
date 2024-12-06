@@ -1,112 +1,260 @@
-<div class="container mt-5">
-    <h1 class="text-center">Todo List</h1>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Book</title>
+    <style>
+        /* Styling Tabel */
+        .container {
+            background-color: #DEB887;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; 
+            justify-content: flex-start; 
+            align-items: center; 
+        
+        }
+        
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%; 
+            width: 100%;
+            background-color: #DEB887;
+        }
 
-    <!-- Form to Add New Todo -->
-    <form id="addTodoForm" class="my-4">
-        <div class="input-group">
-            <input type="text" id="newTask" class="form-control" placeholder="Add a new task..." required>
-            <div class="input-group-append">
-                <button type="submit" class="btn btn-primary">Add Task</button>
-            </div>
-        </div>
-    </form>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+        }
 
-    <!-- List of Todos -->
-    <ul id="todoList" class="list-group">
-        <% todos.forEach(todo=> { %>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span class="<%= todo.completed ? 'completed' : '' %>">
-                    <%= todo.task %>
-                </span>
-                <div>
-                    <button class="btn btn-sm btn-success mr-2 editBtn" data-id="<%= todo.id %>">Edit</button>
-                    <button class="btn btn-sm btn-danger deleteBtn" data-id="<%= todo.id %>">Delete</button>
-                </div>
-            </li>
-            <% }); %>
-    </ul>
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
 
-    <!-- Edit Todo Modal -->
-    <div id="editModal" class="modal fade" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Edit Todo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="editTodoForm">
-                        <div class="form-group">
-                            <label for="editTask">Task</label>
-                            <input type="text" id="editTask" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Styling tombol */
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-danger {
+            background-color: #f44336;
+        }
+
+        .btn-warning {
+            background-color: #ff9800;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .container {
+            width: 90%;
+            margin: 0 auto;
+            background-color: #DEB887;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Footer */
+footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 20px;
+}
+
+footer a {
+    color: #f1f1f1;
+    text-decoration: none;
+}
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Navbar Section */
+.navbar {
+    position: fixed; /* Fixed at the top */
+    top: 0;
+    left: 0;
+    width: 100%; /* Full width */
+    background-color: #333; /* Dark background color */
+    color: white; /* Text color */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px; /* Padding for spacing */
+    z-index: 1000; /* Ensure it's above other elements */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add slight shadow */
+}
+
+/* Logo Container */
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 40px; /* Adjust logo size */
+    width: auto; /* Maintain aspect ratio */
+}
+
+/* Navbar Links */
+.navbar-links {
+    display: flex;
+    gap: 20px; /* Space between links */
+}
+
+.navbar-link {
+    text-decoration: none; /* Remove underline */
+    color: white; /* White text */
+    font-size: 16px; /* Adjust font size */
+    transition: color 0.3s ease; /* Smooth hover effect */
+}
+
+.navbar-link:hover {
+    color: #4CAF50; /* Green on hover */
+}
+
+/* Sign-Out Button */
+.sign-out-container {
+    display: flex;
+    align-items: center;
+}
+
+.sign-out-button {
+    text-decoration: none; 
+    color: white; 
+    font-size: 16px; 
+    padding: 8px 16px; 
+    background-color: black; 
+    border-radius: 4px; 
+    transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+.sign-out-button:hover {
+    background-color: #45a049; 
+    color: white; 
+}
+
+/* Spacing Adjustment for Content */
+body {
+    padding-top: 70px;}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column; 
+        padding: 15px;
+    }
+
+    .navbar-links {
+        flex-direction: column; 
+        gap: 10px; 
+    }
+
+    .sign-out-button {
+        font-size: 14px; 
+        padding: 6px 12px; }
+}
+
+    </style>
+</head>
+<body>
+
+     <!-- Navbar Section -->
+<header class="navbar">
+    <div class="logo-container">
+        <img src="/image/library1.png" alt="Logo" class="logo">
     </div>
-</div>
+    <nav class="navbar-links">
+        <a href="/" class="navbar-link">Home</a>
+        <a href="/contact" class="navbar-link">Contact</a>
+        <a href="/todo" class="navbar-link">Todo</a>
+    </nav>
+    <div class="sign-out-container">
+        <a href="/login" class="sign-out-button">Sign Out</a>
+    </div>
+</header>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        // Add new todo
-        $('#addTodoForm').on('submit', function (e) {
-            e.preventDefault();
-            const task = $('#newTask').val().trim();
-            if (task) {
-                $.ajax({
-                    url: '/todos',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({ task: task }),
-                    success: function (newTodo) {
-                        location.reload(); // Reload to show the new todo
-                    },
-                    error: function (error) {
-                        console.error("Error adding task:", error.responseText);
-                    }
-                });
-            }
-        });
+    <div class="container">
+        <h1>List Book</h1>
 
-        // Delete a todo
-        $('.deleteBtn').on('click', function () {
-            const id = $(this).data('id');
-            $.ajax({
-                url: '/todos/' + id,
-                type: 'DELETE',
-                success: function () {
-                    location.reload(); // Reload to show updated list
-                }
-            });
-        });
+       
 
-        // Show edit modal with the current task
-        let editId;
-        $('.editBtn').on('click', function () {
-            editId = $(this).data('id');
-            const currentTask = $(this).closest('li').find('span').text();
-            $('#editTask').val(currentTask);
-            $('#editModal').modal('show');
-        });
+        <!-- Tabel Daftar Buku -->
+        <table class="tabel">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama Buku</th>
+                    <th>Genre</th>
+                    <th>Tahun Terbit</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (todos && todos.length > 0) { %>
+                    <% todos.forEach(function(todo, index) { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= todo.nama_buku %></td>
+                            <td><%= todo.genre %></td>
+                            <td><%= todo.tahun_terbit %></td>
+                            <td>
+                                <a href="/edit/<%= todo.id %>" class="btn btn-warning">Edit</a>
+                                
+                                <!-- Form untuk menghapus buku -->
+                                <form action="/delete/<%= todo.id %>" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus buku ini?')">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="5" style="text-align: center;">Tidak ada data buku.</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
 
-        // Update todo on form submission
-        $('#editTodoForm').on('submit', function (e) {
-            e.preventDefault();
-            const task = $('#editTask').val().trim();
-            if (task) {
-                $.ajax({
-                    url: '/todos/' + editId,
-                    type: 'PUT',
-                    data: JSON.stringify({ task: task, completed: false }),
-                    contentType: 'application/json',
-                    success: function () {
-                        location.reload(); // Reload to show the updated todo
-                    }
-                });
-            }
-        });
-    });
-</script>
+     <!-- Footer -->
+     <footer>
+        <p>&copy; Copyright</p>
+        <p><a href="#">Muthia Sasi </a> | <a href="mailto:rei@example.com">Email</a></p>
+    </footer>
+
+
+</body>
+</html>

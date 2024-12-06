@@ -1,5 +1,99 @@
-<h1>Sign Up</h1>
-<form action="/signup" method="POST">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Reset and basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Card styling */
+        .signup-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Image styling */
+        .signup-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+
+        /* Form styling */
+        .signup-card form {
+            margin-top: 10px;
+        }
+
+        .signup-card .form-label {
+            text-align: left;
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .signup-card .form-control {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .signup-card .btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .signup-card .btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Link styling */
+        .signup-card p {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .signup-cardp a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .signup-card p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-card">
+        <img src="/image/library1.png" alt="Logo">
+        <h1>Sign Up</h1>
+    <form action="/signup" method="POST">
     <div class="mb-3">
         <label for="username" class="form-label">Username</label>
         <input type="text" class="form-control" id="username" name="username" required>
@@ -11,3 +105,8 @@
     <button type="submit" class="btn btn-primary">Sign Up</button>
 </form>
 <p>Sudah punya akun? <a href="/login">Login here</a>.</p>
+    
+    </div>
+
+</body>
+
